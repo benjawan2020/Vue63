@@ -73,7 +73,12 @@ export default {
         body: JSON.stringify(student),
       })
       let data = await res.json()
-      console.log('data',data)
+      console.log('data',data.status)
+      if(data.status == 'ok'){
+          this.$router.push('pages1')
+      }else{
+          this.$router.push('/')
+      }
         }
     },
 }
