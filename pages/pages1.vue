@@ -2,7 +2,7 @@
     <div style="text-align: center;">
         <v-container>
             <font Face="TH SarabunPSK" style="font-size: 20px;">HELLO</font>
-            <font Face="TH SarabunPSK" style="font-size: 25px;"><b>Friend</b></font>
+            <font Face="TH SarabunPSK" style="font-size: 25px;"><b>{{username}}</b></font>
             <hr>
             <br>
             <br>
@@ -31,6 +31,20 @@
 <script>
 export default {
     layout:"p2",
+    data(){
+        return{
+            username: ''
+        }
+    },
+    created(){
+        let user =  window.sessionStorage.getItem("user")
+        this.username = user
+        console.log('user=' , user)
+        if(!user){
+            console.log('no user')
+            return this.$router.replace("/")
+        }
+    },
 }
 </script>
 <style scoped>
