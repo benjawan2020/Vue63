@@ -8,6 +8,7 @@
     
   </v-app>
 </template>
+
 <style scoped>
   .bg1 {
     background: linear-gradient(to bottom left, #33e1fc 0%, #14bbf1 80%);

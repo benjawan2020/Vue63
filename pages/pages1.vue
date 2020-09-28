@@ -12,20 +12,17 @@
                     <v-img src="images/p.png" width="30"></v-img>
                 </v-avatar>
                 <p style="font-size:15px;">
-                    <font Face="TH SarabunPSK" style="font-size: 15px;">
-                        Lorem ipsum dolor sit amet, 
-                        consectetuer adipiscing elit, sed diam nonummy nibh euismod 
-                        tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                        Lorem ipsum dolor sit amet, 
-                        consectetuer adipiscing elit, sed diam nonummy nibh euismod 
-                        tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                    <font Face="TH SarabunPSK" style="font-size: 20px;text-align: justify;">
+                        {{pre_name}}: {{username}} {{last_name}}<br>
+                        ชื่อเล่น: {{nic_name}}
                     </font>
                 </p>
             </div>
             <br>
             <nuxt-link to="pages2">
-                <v-btn color="indigo">Pages2</v-btn>
+                <v-btn color="primary">Pages2</v-btn>
             </nuxt-link>
+            <v-btn @click="LogOut" color="error"> LogOut</v-btn>
     </div>
 </template>
 <script>
@@ -33,18 +30,30 @@ export default {
     layout:"p2",
     data(){
         return{
-            username: ''
+            username: '',
+            last_name: '',
+            pre_name: '',
+            nic_name: '',
         }
     },
-    created(){
-        let user =  window.sessionStorage.getItem("user")
-        this.username = user
-        console.log('user=' , user)
-        if(!user){
-            console.log('no user')
-            return this.$router.replace("/")
-        }
-    },
+async created() {
+       let user = window.sessionStorage.getItem("user")
+      // this.username=user
+      let res = await fetch('http://localhost:7000/listuser?user='+ user)
+      let data = await res.json()
+      console.log(data.rows[0].first_name)
+     this.username= data.rows[0].first_name
+     this.last_name= data.rows[0].last_name
+     this.pre_name= data.rows[0].pre_name
+     this.nic_name= data.rows[0].nic_name
+   },
+          methods: {
+           LogOut(){
+               console.log('LogOut')
+               window.sessionStorage.removeItem("user");
+               this.$router.push('/')
+           }
+       }
 }
 </script>
 <style scoped>
